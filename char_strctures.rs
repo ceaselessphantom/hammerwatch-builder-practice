@@ -312,7 +312,7 @@ pub mod char_structures{
 		pub fn add_modification(mut character: &mut Character, this: Modification) -> u16{//
 			let y: u16;
 			if character.openslots_m.len()>0{//If a slot is open fill it.
-				y=openslots_m.pop();
+				y=character.openslots_m.pop();
 				character.modifications[y]=this;
 			}
 			else{
