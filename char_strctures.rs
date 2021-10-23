@@ -139,7 +139,7 @@ pub mod char_structures{
 		pub layers: u16,
 	}
 	
-		pub fn initilize_character() -> &mut Character{
+		pub fn initilize_character() -> Character{
 			let first = Stats{
 				attack:
 					Stat{text: "attack".to_string(), 					amount: 120.0, dependents: vec![]},
@@ -234,7 +234,7 @@ pub mod char_structures{
 				potion: Active{name: "potion use".to_string(), attacks: vec![], effects: vec![], texts: vec![]},
 				defeat_enemy: Active{name: "defeated an enemy".to_string(), attacks: vec![], effects: vec![]},
 			};
-			return &mut Character{
+			return Character{
 				stats: first,
 				percent_stats: second,
 				passive_texts: vec![],
