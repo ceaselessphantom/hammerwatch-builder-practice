@@ -3,7 +3,7 @@ pub mod char_structures{
 	pub enum Questions{
 		NoCondition,
 		Condition{condition: Conditions, dependancies: &mut Vec<u16>},
-		DependsOnly{dependancies: &mut Vec<u16>},
+		//DependsOnly{dependancies: &mut Vec<u16>},
 	}
 	pub enum Modify{
 		YesAll(fn(&mut Character, bool, u16, u16)),//layers then index
@@ -14,11 +14,11 @@ pub mod char_structures{
 	pub struct Status{
 		character: Character,
 		new_game: u16,
-		class: Class,
-		statues: [Statue; 3],
-		items: Item,
-		titles: Title,
-		bonuses: Gladiator,
+		//class: Class,
+		//statues: [Statue; 3],
+		//items: Item,
+		//titles: Title,
+		//bonuses: Gladiator,
 	}
 	pub struct Character{
 		pub stats: Stats,
@@ -284,7 +284,7 @@ pub mod char_structures{
 				if targets.mod_indexs[x] == mod_index{
 					break;
 				}
-				x++;
+				x+=1;
 			}
 			if yes == true{
 				if x == targets.len(){
