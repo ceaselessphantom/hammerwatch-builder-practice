@@ -177,15 +177,15 @@ pub mod char_structures{
 				ore_percent:
 					Stat{text: "ore percentage".to_string(), 			amount: 100.0, mod_indexs: vec![]},
 				exp:
-					Stat{text: "exp percent".to_string(),				amount: 100.0, dependants: vec![]},
+					Stat{text: "exp percent".to_string(),				amount: 100.0, mod_indexs: vec![]},
 				exp_a:
-					Stat{text: "aberation exp percent".to_string(),		amount: 100.0, dependants: vec![]},
+					Stat{text: "aberation exp percent".to_string(),		amount: 100.0, mod_indexs: vec![]},
 				exp_b:
-					Stat{text: "beast exp percent".to_string(),			amount: 100.0, dependants: vec![]},
+					Stat{text: "beast exp percent".to_string(),			amount: 100.0, mod_indexs: vec![]},
 				exp_c:
-					Stat{text: "constuct exp percent".to_string(),		amount: 100.0, dependants: vec![]},
+					Stat{text: "constuct exp percent".to_string(),		amount: 100.0, mod_indexs: vec![]},
 				exp_d:
-					Stat{text: "undead exp percent".to_string(),		amount: 100.0, dependants: vec![]},
+					Stat{text: "undead exp percent".to_string(),		amount: 100.0, mod_indexs: vec![]},
 				damage:
 					Stat{text: "damage increase".to_string(), 			amount: 100.0, mod_indexs: vec![]},
 				damage_a:
