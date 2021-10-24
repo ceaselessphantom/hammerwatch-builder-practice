@@ -4,7 +4,7 @@ pub mod char_structures{
 	pub enum Questions{
 		NoCondition,
 		//Condition{condition: Conditions, dependancies: &mut Vec<u16>},
-		//DependsOnly{dependancies: &mut Vec<u16>},
+		//DependsOnly{dependancies: &mut Vec<u16>},//These need fixing
 	}
 	pub enum Modify{
 		YesAll(fn(&mut Character, bool, u16, u16)),//layers then index
@@ -85,7 +85,7 @@ pub mod char_structures{
 	}
 	struct Percentage_Stat{
 		pub text: String,
-		pub amount: Vec<f64>,
+		pub amounts: Vec<f64>,
 	}
 	struct Actives{
 		pub primary_attack: Active,
@@ -208,7 +208,7 @@ pub mod char_structures{
 					Stat{text: "x damage on collision".to_string(), 	amount: 0.0, mod_indexs: vec![]},
 			};
 			let second = Percentage_Stats{
-				evasion: Percentage_Stat{text: "evasion".to_string(), amount: vec![]},
+				evasion: Percentage_Stat{text: "evasion".to_string(), amounts: vec![]},
 				a_crit_chance: Percentage_Stat{text: "attack critical chance".to_string(), amounts: vec![]},
 				s_crit_chance: Percentage_Stat{text: "skill critical chance".to_string(), amounts: vec![]},
 				mana_cost: Percentage_Stat{text: "mana cost".to_string(), amounts: vec![]},
@@ -222,29 +222,37 @@ pub mod char_structures{
 				combo: Parameter_Flag{text: "combo".to_string(), flag: false, mod_indexs: vec![]},
 			};
 			let fourth = Parameter_Percents{
-				remaining_hp: Parameter_Percent{text: "HP percent".to_string, amount: "100", mod_indexs: vec![]},
-				remaining_mp: Parameter_Percent{text: "MP percent".to_string, amount: "100", mod_indexs: vec![]},
+				remaining_hp: Parameter_Percent{text: "HP percent".to_string(), amount: 100, mod_indexs: vec![]},
+				remaining_mp: Parameter_Percent{text: "MP percent".to_string(), amount: 100, mod_indexs: vec![]},
 			};
 			let fifth = Parameter_Inserts{
-				gold: Parameter_Insert{text: "gold amount".to_string, amount: 0, cap: 9999999, mod_indexs: vec![]},//Not sure if that cap will register.
-				item_count: Parameter_Insert{text: "number of items".to_string, amount: 0, cap: 10000, mod_indexs: vec![]},
+				gold: Parameter_Insert{text: "gold amount".to_string(), amount: 0.0, cap: 9999999.0, mod_indexs: vec![]},//Not sure if that cap will register.
+				item_count: Parameter_Insert{text: "number of items".to_string(), amount: 0.0, cap: 10000.0, mod_indexs: vec![]},
 			};
 			let sixth = Actives{
-				primary_attack: Active{name: "Primary Attack".to_string(), attacks: vec![], effects: vec![]},
-				attacked: Active{name: "attacked".to_string(), attacks: vec![], effects: vec![]},
-				potion: Active{name: "potion use".to_string(), attacks: vec![], effects: vec![], texts: vec![]},
-				defeat_enemy: Active{name: "defeated an enemy".to_string(), attacks: vec![], effects: vec![]},
+				primary_attack: Active{name: "Primary Attack".to_string(),
+				    attacks: Texts {fields: vec![], mod_indexs: vec![]},
+				    effects: Texts {fields: vec![], mod_indexs: vec![]}},
+				attacked: Active{name: "attacked".to_string(),
+				    attacks: Texts {fields: vec![], mod_indexs: vec![]},
+				    effects: Texts {fields: vec![], mod_indexs: vec![]}},
+				potion: Active{name: "potion use".to_string(),
+				    attacks: Texts {fields: vec![], mod_indexs: vec![]},
+				    effects: Texts {fields: vec![], mod_indexs: vec![]}},
+				defeat_enemy: Active{name: "defeated an enemy".to_string(),
+				    attacks: Texts {fields: vec![], mod_indexs: vec![]},
+				    effects: Texts {fields: vec![], mod_indexs: vec![]}},
 			};
 			return Character{
 				stats: first,
 				percent_stats: second,
-				passive_texts: vec![],
+				passive_texts: Texts {fields: vec![], mod_indexs: vec![]},
 				flags: third,
 				percents: fourth,
 				inserts: fifth,
 				actives: sixth,
 				flexible: vec![],
-				modify: vec![],
+				modifications: vec![],
 				openslots_m: vec![],
 			};
 		}
@@ -263,7 +271,7 @@ pub mod char_structures{
 			}
 		}
 		pub fn change_percentage(mut fields: &mut Percentage_Stat, amount: f64, yes: bool, mut layers: u16){
-			let mut target = &mut fields.amount;
+			let mut target = &mut fields.amounts;
 			if yes  == true{
 				target.resize(target.len()+layers, amount);
 			}
@@ -289,8 +297,8 @@ pub mod char_structures{
 			}
 			if yes == true{
 				if x == targets.len(){
-					targets.resize.fields(targets.len()+1, target);
-					targets.resize.mod_indexs(targets.len()+1, target);
+					targets.fields.resize(targets.len()+1, target);
+					targets.mod_indexs.resize(targets.len()+1, target);
 				}
 				else{
 					targets.fields[x]=target;
@@ -298,7 +306,7 @@ pub mod char_structures{
 			}
 			else{
 				targets.fields.remove(x);
-				target.mod_indexs.remove(x);
+				targets.mod_indexs.remove(x);
 			}
 		}
 		pub fn change_parameter_flag(){
@@ -313,7 +321,7 @@ pub mod char_structures{
 		pub fn add_modification(mut character: &mut Character, this: Modification) -> u16{//
 			let y: u16;
 			if character.openslots_m.len()>0{//If a slot is open fill it.
-				y=character.openslots_m.pop();
+				//y=character.openslots_m.pop(); this failed to work
 				character.modifications[y]=this;
 			}
 			else{
@@ -396,34 +404,34 @@ pub mod char_structures{
 			return result;
 		}
 		pub fn test_questions(character: Character, test: Questions) -> bool{
-			match test{
+			/*match test{
 				Questions::NoCondition => return true,
 				Questions::Condition{condition, dependancies} => return condition(character),
-			}
+			}*/
 		}
 		pub fn modify_layers(mut character: &mut Character, mod_index: u16, layers: u16){
-			run_modification(&mut character, 0, mod_index);
+			run_modification(&mut character, false, mod_index);
 			character.modifications[mod_index].layers = layers;
-			run_modification(&mut character, 1, mod_index);
+			run_modification(&mut character, true, mod_index);
 		}
 		pub fn run_modification(mut character: &mut Character, yes: bool, mod_index: u16){
 			//Consider a way to increment this every time it is ran to stop infinite loops.
 			let mut target = &mut character.modifications[mod_index];
 			fn running(mut character: &mut Character, yes: bool, mod_index: u16){
 				let mut target = &mut character.modifications[mod_index];
-				match target.changes{
+				/*match target.changes{
 					Modify::YesAll(a) => a(character, yes, target.layers, mod_index),
 					Modify::NoLayers(b) => b(character, yes, mod_index),
 					Modify::NoIndex(c) => c(character, yes, target.layers),
 					Modify::YesAll(d) => d(character, yes),
-				}
+				}*/
 			}
-			if yes == true && test_questions(character, target.questions) == true && target.activated == false{
+			/*if yes == true && test_questions(character, target.questions) == true && target.activated == false{
 				running(character, true, mod_index);
 			}
 			else if yes == false && target.activated == true{
 				running(character, false, mod_index);
 				target.activated = false;
-			}
+			}*/
 		}
 }
