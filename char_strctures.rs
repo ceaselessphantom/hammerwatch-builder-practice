@@ -1,8 +1,9 @@
+#![allow(unused)]
 pub mod char_structures{
 	pub type Conditions = fn(Character) -> bool;
 	pub enum Questions{
 		NoCondition,
-		Condition{condition: Conditions, dependancies: &mut Vec<u16>},
+		//Condition{condition: Conditions, dependancies: &mut Vec<u16>},
 		//DependsOnly{dependancies: &mut Vec<u16>},
 	}
 	pub enum Modify{
@@ -142,39 +143,39 @@ pub mod char_structures{
 		pub fn initilize_character() -> Character{
 			let first = Stats{
 				attack:
-					Stat{text: "attack".to_string(), 					amount: 120.0, dependents: vec![]},
+					Stat{text: "attack".to_string(), 					amount: 120.0, mod_indexs: vec![]},
 				skill:
-					Stat{text: "skill".to_string(), 					amount: 50.0, dependents: vec![]},
+					Stat{text: "skill".to_string(), 					amount: 50.0, mod_indexs: vec![]},
 				armor:
-					Stat{text: "armor".to_string(), 					amount: 70.0, dependents: vec![]},
+					Stat{text: "armor".to_string(), 					amount: 70.0, mod_indexs: vec![]},
 				resist:
-					Stat{text: "resistance".to_string(), 				amount: 50.0, dependents: vec![]},
+					Stat{text: "resistance".to_string(), 				amount: 50.0, mod_indexs: vec![]},
 				base_health:
-					Stat{text: "base health".to_string(), 				amount: 0.0, dependents: vec![]},
+					Stat{text: "base health".to_string(), 				amount: 0.0, mod_indexs: vec![]},
 				base_mana:
-					Stat{text: "base mana".to_string(), 				amount: 0.0, dependents: vec![]},
+					Stat{text: "base mana".to_string(), 				amount: 0.0, mod_indexs: vec![]},
 				health:
-					Stat{text: "health".to_string(), 					amount: 0.0, dependents: vec![]},
+					Stat{text: "health".to_string(), 					amount: 0.0, mod_indexs: vec![]},
 				mana:
-					Stat{text: "mana".to_string(), 						amount: 0.0, dependents: vec![]},
+					Stat{text: "mana".to_string(), 						amount: 0.0, mod_indexs: vec![]},
 				hp_regen:
-					Stat{text: "health regeneration".to_string(), 		amount: 1.0, dependents: vec![]},
+					Stat{text: "health regeneration".to_string(), 		amount: 1.0, mod_indexs: vec![]},
 				mp_regen:
-					Stat{text: "mana regeneration".to_string(), 		amount: 1.0, dependents: vec![]},
+					Stat{text: "mana regeneration".to_string(), 		amount: 1.0, mod_indexs: vec![]},
 				attack_p_damage:
-					Stat{text: "physical attack damage".to_string(), 	amount: 0.0, dependents: vec![]},
+					Stat{text: "physical attack damage".to_string(), 	amount: 0.0, mod_indexs: vec![]},
 				attack_m_damage:
-					Stat{text: "magical attack damage".to_string(), 	amount: 0.0, dependents: vec![]},
+					Stat{text: "magical attack damage".to_string(), 	amount: 0.0, mod_indexs: vec![]},
 				attack_speed:
-					Stat{text: "attack speed".to_string(), 				amount: 100.0, dependents: vec![]},
+					Stat{text: "attack speed".to_string(), 				amount: 100.0, mod_indexs: vec![]},
 				movement_speed:
-					Stat{text: "movement speed".to_string(), 			amount: 1.6, dependents: vec![]},
+					Stat{text: "movement speed".to_string(), 			amount: 1.6, mod_indexs: vec![]},
 				luck:
-					Stat{text: "luck".to_string(), 						amount: 0.0, dependents: vec![]},
+					Stat{text: "luck".to_string(), 						amount: 0.0, mod_indexs: vec![]},
 				gold_percent:
-					Stat{text: "gold percentage".to_string(), 			amount: 100.0, dependents: vec![]},
+					Stat{text: "gold percentage".to_string(), 			amount: 100.0, mod_indexs: vec![]},
 				ore_percent:
-					Stat{text: "ore percentage".to_string(), 			amount: 100.0, dependents: vec![]},
+					Stat{text: "ore percentage".to_string(), 			amount: 100.0, mod_indexs: vec![]},
 				exp:
 					Stat{text: "exp percent".to_string(),				amount: 100.0, dependants: vec![]},
 				exp_a:
@@ -186,25 +187,25 @@ pub mod char_structures{
 				exp_d:
 					Stat{text: "undead exp percent".to_string(),		amount: 100.0, dependants: vec![]},
 				damage:
-					Stat{text: "damage increase".to_string(), 			amount: 100.0, dependents: vec![]},
+					Stat{text: "damage increase".to_string(), 			amount: 100.0, mod_indexs: vec![]},
 				damage_a:
-					Stat{text: "damage aberration".to_string(), 		amount: 100.0, dependents: vec![]},
+					Stat{text: "damage aberration".to_string(), 		amount: 100.0, mod_indexs: vec![]},
 				damage_b:
-					Stat{text: "damage beast".to_string(), 				amount: 100.0, dependents: vec![]},
+					Stat{text: "damage beast".to_string(), 				amount: 100.0, mod_indexs: vec![]},
 				damage_c:
-					Stat{text: "damage construct".to_string(), 			amount: 100.0, dependents: vec![]},
+					Stat{text: "damage construct".to_string(), 			amount: 100.0, mod_indexs: vec![]},
 				damage_d:
-					Stat{text: "damage undead".to_string(), 			amount: 100.0, dependents: vec![]},
+					Stat{text: "damage undead".to_string(), 			amount: 100.0, mod_indexs: vec![]},
 				critical_a_damage:
-					Stat{text: "critical attack damage".to_string(), 	amount: 4.0, dependents: vec![]},
+					Stat{text: "critical attack damage".to_string(), 	amount: 4.0, mod_indexs: vec![]},
 				critical_s_damage:
-					Stat{text: "critical skill damage".to_string(), 	amount: 3.5, dependents: vec![]},
+					Stat{text: "critical skill damage".to_string(), 	amount: 3.5, mod_indexs: vec![]},
 				lifesteal:
-					Stat{text: "lifesteal".to_string(), 	amount: 0.0, dependents: vec![]},
+					Stat{text: "lifesteal".to_string(), 	amount: 0.0, mod_indexs: vec![]},
 				return_p_damage:
-					Stat{text: "return x damage when hit".to_string(), 	amount: 0.0, dependents: vec![]},
+					Stat{text: "return x damage when hit".to_string(), 	amount: 0.0, mod_indexs: vec![]},
 				p_collide:
-					Stat{text: "x damage on collision".to_string(), 	amount: 0.0, dependents: vec![]},
+					Stat{text: "x damage on collision".to_string(), 	amount: 0.0, mod_indexs: vec![]},
 			};
 			let second = Percentage_Stats{
 				evasion: Percentage_Stat{text: "evasion".to_string(), amount: vec![]},
@@ -352,7 +353,7 @@ pub mod char_structures{
 				}
 			}
 		}
-		pub fn recieve_parameter(mut character: &mut Character, thing: &str) -> &mut Vec<u16>{
+		pub fn recieve_parameter(mut character: &mut Character, thing: &str) -> Vec<u16>{
 			let mut result: Vec<u16>;
 			match thing{
 				"attack" => result = character.stats.attack.mod_indexs,
@@ -392,7 +393,7 @@ pub mod char_structures{
 				"gold" => result = character.inserts.gold.mod_indexs,
 				"item count" => result = character.inserts.item_count.mod_indexs,
 			}
-			return &mut result;
+			return result;
 		}
 		pub fn test_questions(character: Character, test: Questions) -> bool{
 			match test{
